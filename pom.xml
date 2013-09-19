@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ro.fortsoft.wicket.pivot</groupId>
     <artifactId>wicket-pivot-parent</artifactId>
-   	<version>0.5-SNAPSHOT</version>
+   	<version>0.5-rototor1</version>
     <packaging>pom</packaging>    
 	<name>Wicket Pivot Parent</name>
 	<description>Simple web pivot table using Apache Wicket</description>
@@ -32,7 +32,7 @@
         
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <wicket.version>6.4.0</wicket.version>
+        <wicket.version>6.8.0</wicket.version>
     </properties>   
 
     <build>
@@ -156,5 +156,16 @@
             </build>
         </profile>
     </profiles>
+
+	<distributionManagement>
+		<repository>
+			<id>repo-deploy</id>
+			<url>http://ems:emsems@10.50.3.5:8081/artifactory/libs-release-local</url>
+		</repository>
+		<snapshotRepository>
+			<id>repo-deploy-snapshot</id>
+			<url>http://ems:emsems@10.50.3.5:8081/artifactory/libs-snapshot-local</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
