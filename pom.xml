@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     
+<!--
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
+    -->
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>ro.fortsoft.wicket.pivot</groupId>
@@ -19,7 +21,7 @@
         <license>
             <name>The Apache Software License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
+            <distribution>repo-deploy</distribution>
         </license>
     </licenses>
 
@@ -128,6 +130,7 @@
         <module>demo</module>
     </modules>
 
+    <!--
     <profiles>
         <profile>
             <id>release-sign-artifacts</id>
@@ -156,6 +159,7 @@
             </build>
         </profile>
     </profiles>
+    -->
 
 	<distributionManagement>
 		<repository>
