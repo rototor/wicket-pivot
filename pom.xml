@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ro.fortsoft.wicket.pivot</groupId>
     <artifactId>wicket-pivot-parent</artifactId>
-   	<version>0.5-rototor2</version>
+   	<version>0.5-rototor3</version>
     <packaging>pom</packaging>    
 	<name>Wicket Pivot Parent</name>
 	<description>Simple web pivot table using Apache Wicket</description>
