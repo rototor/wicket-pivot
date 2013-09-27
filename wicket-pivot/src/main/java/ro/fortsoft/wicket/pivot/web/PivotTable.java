@@ -33,9 +33,9 @@ import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.HeaderRenderCell;
 import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.HeaderRenderRow;
 import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.HeaderValueRenderCell;
 import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.RenderCell;
-import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.RowCellValueRenderCell;
-import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.RowHeaderRenderCell;
-import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.RowRenderRow;
+import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.DataValueRenderCell;
+import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.DataHeaderRenderCell;
+import ro.fortsoft.wicket.pivot.web.PivotTableRenderModel.DataRenderRow;
 
 /**
  * @author Decebal Suiu
@@ -61,8 +61,7 @@ public class PivotTable extends GenericPanel<PivotModel> {
 		super.onInitialize();
 
 		PivotModel pivotModel = getModelObject();
-		PivotTableRenderModel renderModel = new PivotTableRenderModel();
-		renderModel.calculate(pivotModel);
+		PivotTableRenderModel renderModel =	PivotTableRenderModel.create(pivotModel);
 
 		// rendering header
 		RepeatingView column = new RepeatingView("header");
@@ -139,13 +138,13 @@ public class PivotTable extends GenericPanel<PivotModel> {
 		// rendering rows
 		RepeatingView row = new RepeatingView("row");
 		add(row);
-		for (RowRenderRow renderRow : renderModel.getValueRows()) {
+		for (DataRenderRow renderRow : renderModel.getValueRows()) {
 			WebMarkupContainer tr = new WebMarkupContainer(row.newChildId());
 			row.add(tr);
 			RepeatingView rowHeader = new RepeatingView("rowHeader");
 			tr.add(rowHeader);
 
-			for (RowHeaderRenderCell cell : renderRow.rowHeader) {
+			for (DataHeaderRenderCell cell : renderRow.rowHeader) {
 				tmp = createValueLabel(rowHeader.newChildId(), cell.getRawValue(), cell.pivotField);
 				applyRowColSpan(cell, tmp);
 				rowHeader.add(tmp);
@@ -155,7 +154,7 @@ public class PivotTable extends GenericPanel<PivotModel> {
 			tr.add(value);
 
 			for (RenderCell cell : renderRow.value) {
-				if (cell instanceof RowCellValueRenderCell) {
+				if (cell instanceof DataValueRenderCell) {
 					tmp = createValueLabel(value.newChildId(), cell.getRawValue(), cell.pivotField);
 					applyRowColSpan(cell, tmp);
 					value.add(tmp);

@@ -32,6 +32,10 @@ import ro.fortsoft.wicket.pivot.tree.TreeHelper;
  */
 public class PivotTableRenderModel implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private PivotTableRenderModel() {
+	}
+
 	private Map<List<Object>, Integer> spanCache;
 
 	public static abstract class RenderCell implements Serializable {
@@ -49,38 +53,9 @@ public class PivotTableRenderModel implements Serializable {
 		}
 	}
 
-	public static class RowCellValueRenderCell extends RenderCell {
-		private static final long serialVersionUID = 1L;
-
-		public RowCellValueRenderCell(Number cellValue, PivotField dataField) {
-			value = cellValue;
-			this.pivotField = dataField;
-		}
-
-	}
-
-	public static class GrandTotalValueRenderCell extends RenderCell {
-		private static final long serialVersionUID = 1L;
-		boolean forRow;
-
-		public GrandTotalValueRenderCell(double grandTotalForRow, boolean forRow) {
-			value = grandTotalForRow;
-			this.forRow = forRow;
-		}
-	}
-
-	public static class RowHeaderRenderCell extends RenderCell {
-		private static final long serialVersionUID = 1L;
-
-		public RowHeaderRenderCell(Object value, PivotField rowField) {
-			this.value = value;
-			this.pivotField = rowField;
-		}
-	}
-
 	public static class HeaderRenderCell extends RenderCell {
 		private static final long serialVersionUID = 1L;
-
+	
 		public HeaderRenderCell(PivotField pivotField) {
 			this.pivotField = pivotField;
 			if (pivotField != null)
@@ -90,10 +65,38 @@ public class PivotTableRenderModel implements Serializable {
 
 	public static class HeaderValueRenderCell extends HeaderRenderCell {
 		private static final long serialVersionUID = 1L;
-
+	
 		public HeaderValueRenderCell(Object value, PivotField pivotField) {
 			super(pivotField);
 			this.value = value;
+		}
+	}
+
+	public static class DataHeaderRenderCell extends RenderCell {
+		private static final long serialVersionUID = 1L;
+	
+		public DataHeaderRenderCell(Object value, PivotField rowField) {
+			this.value = value;
+			this.pivotField = rowField;
+		}
+	}
+
+	public static class DataValueRenderCell extends RenderCell {
+		private static final long serialVersionUID = 1L;
+
+		public DataValueRenderCell(Number cellValue, PivotField dataField) {
+			value = cellValue;
+			this.pivotField = dataField;
+		}
+	}
+
+	public static class GrandTotalValueRenderCell extends RenderCell {
+		private static final long serialVersionUID = 1L;
+		boolean forRow;
+	
+		public GrandTotalValueRenderCell(double grandTotalForRow, boolean forRow) {
+			value = grandTotalForRow;
+			this.forRow = forRow;
 		}
 	}
 
@@ -111,7 +114,6 @@ public class PivotTableRenderModel implements Serializable {
 		public GrandTotalRowHeaderRenderCell(String value) {
 			super(value);
 		}
-
 	}
 
 	public static abstract class RenderRow implements Serializable {
@@ -148,9 +150,9 @@ public class PivotTableRenderModel implements Serializable {
 		}
 	}
 
-	public static class RowRenderRow extends RenderRow {
+	public static class DataRenderRow extends RenderRow {
 		private static final long serialVersionUID = 1L;
-		List<RowHeaderRenderCell> rowHeader = new ArrayList<RowHeaderRenderCell>();
+		List<DataHeaderRenderCell> rowHeader = new ArrayList<DataHeaderRenderCell>();
 		List<RenderCell> value = new ArrayList<RenderCell>();
 
 		@Override
@@ -177,14 +179,14 @@ public class PivotTableRenderModel implements Serializable {
 	}
 
 	private List<HeaderRenderRow> column;
-	private List<RowRenderRow> row;
+	private List<DataRenderRow> row;
 	private List<GrandTotalRenderRow> grandTotalRow;
 
 	public List<HeaderRenderRow> getHeaderRows() {
 		return column;
 	}
 
-	public List<RowRenderRow> getValueRows() {
+	public List<DataRenderRow> getValueRows() {
 		return row;
 	}
 
@@ -200,10 +202,16 @@ public class PivotTableRenderModel implements Serializable {
 		return ret;
 	}
 
-	public void calculate(PivotModel pivotModel) {
+	public static PivotTableRenderModel create(PivotModel pivotModel) {
+		PivotTableRenderModel renderModel = new PivotTableRenderModel();
+		renderModel.calculate(pivotModel);
+		return renderModel;
+	}
+
+	private void calculate(PivotModel pivotModel) {
 		spanCache = new HashMap<List<Object>, Integer>();
 		column = new ArrayList<HeaderRenderRow>();
-		row = new ArrayList<RowRenderRow>();
+		row = new ArrayList<DataRenderRow>();
 		grandTotalRow = new ArrayList<GrandTotalRenderRow>();
 
 		List<PivotField> columnFields = pivotModel.getFields(PivotField.Area.COLUMN);
@@ -294,7 +302,7 @@ public class PivotTableRenderModel implements Serializable {
 		Node rowsRoot = pivotModel.getRowsHeaderTree().getRoot();
 		List<List<Object>> pathRenderedCache = new ArrayList<List<Object>>();
 		for (List<Object> rowKey : rowKeys) {
-			RowRenderRow tr = new RowRenderRow();
+			DataRenderRow tr = new DataRenderRow();
 			row.add(tr);
 
 			for (int k = 0; k < rowKey.size(); k++) {
@@ -302,7 +310,7 @@ public class PivotTableRenderModel implements Serializable {
 				int rowspan = getSpan(rowsRoot, path);
 
 				PivotField rowField = rowFields.get(k);
-				RowHeaderRenderCell cell = new RowHeaderRenderCell(rowKey.get(k), rowField);
+				DataHeaderRenderCell cell = new DataHeaderRenderCell(rowKey.get(k), rowField);
 				cell.rowspan = rowspan;
 
 				// TODO optimization (create an emptyPanel is more optimal)
@@ -317,7 +325,7 @@ public class PivotTableRenderModel implements Serializable {
 			for (List<Object> columnKey : columnKeys) {
 				for (PivotField dataField : dataFields) {
 					Number cellValue = (Number) pivotModel.getValueAt(dataField, rowKey, columnKey);
-					tr.value.add(new RowCellValueRenderCell(cellValue, dataField));
+					tr.value.add(new DataValueRenderCell(cellValue, dataField));
 				}
 			}
 
