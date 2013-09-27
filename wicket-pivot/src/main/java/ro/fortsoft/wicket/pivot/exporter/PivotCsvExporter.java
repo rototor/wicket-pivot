@@ -24,7 +24,6 @@ import ro.fortsoft.wicket.pivot.PivotTableRenderModel;
 import ro.fortsoft.wicket.pivot.PivotTableRenderModel.RenderCell;
 import ro.fortsoft.wicket.pivot.PivotTableRenderModel.RenderRow;
 
-
 /**
  * Basic CSV exporter
  */

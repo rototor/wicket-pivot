@@ -127,6 +127,7 @@
     
     <modules>
         <module>wicket-pivot</module>
+        <module>wicket-pivot-exporter</module>
         <module>demo</module>
     </modules>
 
