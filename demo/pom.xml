@@ -4,7 +4,7 @@
     <parent>
         <groupId>ro.fortsoft.wicket.pivot</groupId>
         <artifactId>wicket-pivot-parent</artifactId>
-    <version>0.5-rototor6</version>
+    <version>0.5-rototor7</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
