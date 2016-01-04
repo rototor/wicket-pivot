@@ -1,18 +1,16 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     
-<!--
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
-    -->
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>ro.fortsoft.wicket.pivot</groupId>
     <artifactId>wicket-pivot-parent</artifactId>
-   	<version>0.5-rototor7</version>
+   	<version>0.6.0-SNAPHOT</version>
     <packaging>pom</packaging>    
 	<name>Wicket Pivot Parent</name>
 	<description>Simple web pivot table using Apache Wicket</description>
@@ -21,7 +19,7 @@
         <license>
             <name>The Apache Software License, Version 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo-deploy</distribution>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -34,7 +32,7 @@
         
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <wicket.version>6.8.0</wicket.version>
+        <wicket.version>6.12.0</wicket.version>
     </properties>   
 
     <build>
