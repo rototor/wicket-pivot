@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>ro.fortsoft.wicket.pivot</groupId>
 		<artifactId>wicket-pivot-parent</artifactId>
-		<version>0.6.0-SNAPHOT</version>
+		<version>0.6.0-rototor-1</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>wicket-pivot-exporter</artifactId>
-	<version>0.6.0-SNAPHOT</version>
+	<version>0.6.0-rototor-1</version>
 	<packaging>jar</packaging>
 	<name>Wicket Pivot Exporter</name>
 	<description>Simple web pivot table using Apache Wicket Exporter Plugins</description>
